@@ -1,0 +1,17 @@
+{
+  "name": "collaborative-whiteboard",
+  "version": "1.0.0",
+  "description": "Real-time collaborative whiteboard application",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\""
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
