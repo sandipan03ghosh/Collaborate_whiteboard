@@ -7,8 +7,8 @@ Prerequisites:
 •	npm or yarn
 
 Installation Steps:
-1. Clone the repository:      git clone https://github.com/sandipan03ghosh/Whiteboard.git
-                              cd Whiteboard
+1. Clone the repository:          git clone https://github.com/sandipan03ghosh/Whiteboard.git
+                                  cd Whiteboard
 2. Server Setup:                  # Navigate to server directory
                                   cd server
                                   # Install dependencies
@@ -30,7 +30,7 @@ Installation Steps:
 2)API Documentation:             REST Endpoints
                                  Room Management
 Endpoint	                  Method	Description	                         Request Body	                  Response
-/api/rooms/join	            POST	  Join or create a room	            { roomId: string }	 { roomId, createdAt, hasDrawings }
+/api/rooms/join	            POST	  Join or create a room	             { roomId: string }	  { roomId, createdAt, hasDrawings }
 /api/rooms/:roomId	        GET	    Get room information		                -               { roomId, createdAt, lastActivity, drawingCount }
 /api/rooms/:roomId/drawings	GET	    Get all drawing data for a room		      -               { drawingData: [] }
 
