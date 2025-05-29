@@ -14,8 +14,6 @@ const RoomSchema = new mongoose.Schema({
   drawingData: [DrawingCommandSchema],
 });
 
-RoomSchema.index({ roomId: 1 });
-
 RoomSchema.methods.addDrawing = function(drawingData) {
   this.drawingData.push(drawingData);
   this.lastActivity = Date.now();

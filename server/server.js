@@ -32,12 +32,25 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  
-  connectDB().then(connected => {
-    if (!connected) {
-      console.warn('Server running without MongoDB connection. Some features may not work properly.');
+
+// Function to start the server with port fallback
+function startServer(port) {
+  server.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+    
+    connectDB().then(connected => {
+      if (!connected) {
+        console.warn('Server running without MongoDB connection. Some features may not work properly.');
+      }
+    });
+  }).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log(`Port ${port} is already in use, trying ${port + 1}`);
+      startServer(port + 1);
+    } else {
+      console.error('Server error:', err);
     }
   });
-});
+}
+
+startServer(PORT);
