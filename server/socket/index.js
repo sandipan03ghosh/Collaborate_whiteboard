@@ -140,6 +140,22 @@ module.exports = (io) => {
       socket.to(roomId).emit('clear-canvas');
     });
 
+    socket.on('clear-user-drawings', async (roomId) => {
+      try {
+        const room = await Room.findOne({ roomId });
+        if (room) {
+          await room.clearUserDrawings(socket.id);
+          console.log(`Cleared drawings for user ${socket.id} in room ${roomId}`);
+          
+          // Send updated drawing data to all clients in the room
+          const updatedRoom = await Room.findOne({ roomId });
+          io.to(roomId).emit('load-drawings', updatedRoom.drawingData);
+        }
+      } catch (err) {
+        console.error('Error clearing user drawings in database:', err);
+      }
+    });
+
     socket.on('disconnect', () => {
       console.log(`User disconnected: ${socket.id}`);
       

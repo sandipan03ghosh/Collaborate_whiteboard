@@ -29,11 +29,32 @@ function DrawingCanvas() {
       socket.emit('clear-canvas');
     });
 
+    // Add handler for when drawings are updated after a user clears their drawings
+    socket.on('load-drawings', (drawings) => {
+      // Clear the canvas first
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Redraw all remaining drawings
+      drawings.forEach((item) => {
+        if (item.type === 'stroke' && item.data) {
+          const { x0, y0, x1, y1, color, width } = item.data;
+          drawLine({ x0, y0, x1, y1, color: color || 'black', width: width || 3 });
+        }
+      });
+    });
+
     socket.on('clear-canvas', handleClear);
+
+    // Add event listener for clearing only the current user's drawings
+    window.addEventListener('clearMyDrawings', () => {
+      socket.emit('clear-user-drawings');
+    });
 
     return () => {
       socket.off('draw-move', handleDraw);
       socket.off('clear-canvas', handleClear);
+      socket.off('load-drawings');
+      window.removeEventListener('clearMyDrawings');
     };
   }, []);
 

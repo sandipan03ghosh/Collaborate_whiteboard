@@ -207,6 +207,10 @@ function Whiteboard({ roomId }) {
     socket.emit('clear-canvas', roomId);
   };
 
+  const clearMyDrawings = () => {
+    socket.emit('clear-user-drawings', roomId);
+  };
+
   const handleMouseMove = (e) => {
     const rect = canvasRef.current.getBoundingClientRect();
     const position = {
@@ -233,7 +237,8 @@ function Whiteboard({ roomId }) {
     <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '10px' }}>
       <div ref={containerRef} style={{ position: 'relative' }}>
         <div style={{ margin: '10px 0', display: 'flex', alignItems: 'center' }}>
-          <button onClick={clearCanvas} style={{ marginRight: '10px' }}>Clear Canvas</button>
+          <button onClick={clearCanvas} style={{ marginRight: '10px' }}>Clear All</button>
+          <button onClick={clearMyDrawings} style={{ marginRight: '10px' }}>Clear My Drawings</button>
           <select 
             value={strokeStyle}
             onChange={(e) => setStrokeStyle(e.target.value)}

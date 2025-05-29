@@ -26,4 +26,10 @@ RoomSchema.methods.clearDrawings = function() {
   return this.save();
 };
 
+RoomSchema.methods.clearUserDrawings = function(userId) {
+  this.drawingData = this.drawingData.filter(item => item.userId !== userId);
+  this.lastActivity = Date.now();
+  return this.save();
+};
+
 module.exports = mongoose.model('Room', RoomSchema);
